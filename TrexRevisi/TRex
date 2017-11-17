@@ -9,12 +9,16 @@ import com.jme3.scene.Spatial;
 
 /**
  *
- * @author user
+ * @author Sofyan septiana
  */
 public class Trex {
     
     private CharacterControl trexControl;
     private Spatial trexPlayer;
+    /**
+    *   menginisial trex,ukuran,dan posisi yang telah ditentukan dan menambahkan control.
+    *   @param trex ,Spatial yang akan dijadikan sebagai trex.
+    */
     public Trex(Spatial trex){
         trexPlayer=trex;
         trexPlayer.setLocalScale(0.1f);
@@ -30,11 +34,19 @@ public class Trex {
         trexControl.setJumpSpeed(15);
         
     }
-
+    
+    /**
+    *   mengembalikan control dari trex
+    *   @return trexControl yang mempunyai type data CharacterControl
+    */
     public CharacterControl getTrexControl() {
         return trexControl;
     }
 
+    /**
+    *   mengembalikan bentuk trex
+    *   @return trexPlayer yang mempunyai type Spatial
+    */
     public Spatial getTrexPlayer() {
         return trexPlayer;
     }
