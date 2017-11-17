@@ -204,7 +204,7 @@ public class Main extends SimpleApplication
         }
     }
     
-    //memanggil rintangan dari posisi yang telah ditentukan.
+    //memanggil rintangan dari posisi yang telah ditentukan dan menambah kecepatan rintangan.
     public void spawn(Rintangan rin){
         rintangan=rin;
         rootNode.attachChild(rintangan.getRintangan());
