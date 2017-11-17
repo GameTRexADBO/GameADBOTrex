@@ -7,13 +7,25 @@ import com.jme3.scene.Spatial;
 import java.util.Random;
 
 /**
- *
- * @author user
+ * Kelas ini merupakan kelas abstract untuk membuat rintangan
+ * @author Nadhila Herdanti Dwi Larasati 2014730035
  */
 public abstract class Rintangan
 {
+    /**
+     * attribute rintanganControl: untuk mengendalikan rintangan
+     */
     protected CharacterControl rintanganControl;
+    
+    /**
+     * attribute rintangan: untuk membuat rintangan
+     */
     protected Spatial rintangan;
+    
+    /**
+     * Constructor kelas Rintangan
+     * @param rin membuat rintangan dengan cara dirandom
+     */
     public Rintangan(Spatial rin)
     {
         Random r=new Random();
@@ -32,10 +44,18 @@ public abstract class Rintangan
 
     
     
+    /**
+     * Method untuk mengubah control rintangan
+     * @return control rintangan
+     */
     public CharacterControl getRintanganControl() {
         return rintanganControl;
     }
 
+    /**
+     * Method untuk mengubah posisi rintangan
+     * @return posisi rintangan
+     */
     public Spatial getRintangan() {
         return rintangan;
     }
