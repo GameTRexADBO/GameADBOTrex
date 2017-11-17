@@ -3,7 +3,7 @@ package MyState;
 import com.jme3.scene.Spatial;
 
 /**
- * Class Shuriken 
+ * Class Shuriken adalah child class yang melakukan extend ke parent class Rintangan
  * @author Hasan Abdurrahim Shiddiq
  * NPM 2015730018
  */
