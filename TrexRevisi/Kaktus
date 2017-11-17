@@ -3,11 +3,16 @@ package MyState;
 import com.jme3.scene.Spatial;
 
 /**
- *
- * @author user
+ * Kelas ini adalah kelas kaktus yang merupakan sub-class dari kelas Rintangan
+ * @author Nadhila Herdanti Dwi Larasati
  */
 public class Kaktus extends Rintangan
 {
+    /**
+     * Constructor kelas Kaktus
+     * Memanggil constructor dari kelas Rintangan dengan parameter atribut kelas Kaktus
+     * @param kaktus
+     */
     public Kaktus(Spatial kaktus)
     {
         super(kaktus);
