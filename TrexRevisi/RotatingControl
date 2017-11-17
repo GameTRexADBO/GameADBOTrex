@@ -22,17 +22,29 @@ public class RotatingControl extends AbstractControl {
 
     private float speed = 1;
 
+/**
+ *  membuat spatial berputar dengan kecepatan 8*tpf
+ *  @param tpf
+ */
     @Override
     protected void controlUpdate(float tpf) {
         spatial.rotate(0, tpf*8, 0);
     }
-
+    
+/**
+ *  method yang belum digunakan.
+ * @param rm,vp
+ */
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {
         //Only needed for rendering-related operations,
         //not called when spatial is culled.
     }
 
+/**
+ *  
+ * 
+ */
     @Override
     public Control cloneForSpatial(Spatial spatial) {
         RotatingControl control = new RotatingControl();
@@ -40,14 +52,10 @@ public class RotatingControl extends AbstractControl {
         return control;
     }
 
-    public float getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
+/**
+ *  
+ * 
+ */
     @Override
     public void read(JmeImporter im) throws IOException {
         super.read(im);
@@ -55,6 +63,10 @@ public class RotatingControl extends AbstractControl {
         this.speed = in.readFloat("speed", 1.0f);
     }
 
+/**
+ *  
+ * 
+ */
     @Override
     public void write(JmeExporter ex) throws IOException {
         super.write(ex);
