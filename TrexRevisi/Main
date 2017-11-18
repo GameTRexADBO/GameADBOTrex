@@ -19,6 +19,7 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Spatial;
 import java.util.Random;
 
+
 /**
  * This is the Main Class of your Game. You should only do initialization here.
  * Move your Logic into AppStates or Controls
@@ -40,9 +41,11 @@ public class Main extends SimpleApplication
     private BitmapText scoreText;
     private BitmapText highScoreText;
     Score s = new Score();
-    public float speed = 7;
+    public float speed;
     private AnimChannel channel;
     private AnimControl control;
+    private boolean alive=true;
+    private boolean duck=false;
     
     public static void main(String[] args)
     {
@@ -53,6 +56,7 @@ public class Main extends SimpleApplication
     @Override
     public void simpleInitApp() 
     {
+        speed=7;
         rootNode = this.getRootNode();
         inputManager = this.getInputManager();
         assetManager = this.getAssetManager();
@@ -70,10 +74,13 @@ public class Main extends SimpleApplication
         highScoreText.setLocalTranslation(500, settings.getHeight()-20, 0);
         guiNode.attachChild(scoreText);
         guiNode.attachChild(highScoreText);
+        
          //set kamera
         camera.setLocation(new Vector3f(20,5,125));
         camera.lookAt(new Vector3f(0,0,110), new Vector3f(0,0,0));
         this.flyByCamera.setEnabled(false);
+        this.flyByCamera.setMoveSpeed(70);
+        rootNode.attachChild(rootNode);
         
         /**
          * set cahaya
@@ -102,9 +109,12 @@ public class Main extends SimpleApplication
         
         inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addListener(actionListener, "Jump");
+        inputManager.addMapping("Duck", new KeyTrigger(KeyInput.KEY_DOWN));
+        inputManager.addListener(actionListener, "Duck");
         
         //summon rintangan pertama selanjutnya auto summon
         spawn(new Shuriken(assetManager.loadModel("Models/shuriken2.j3o")));
+        
     }
 
     private final ActionListener actionListener = new ActionListener() {
@@ -115,6 +125,18 @@ public class Main extends SimpleApplication
                 if(run==false){
                     run=true;
                 }
+                if(alive==false){
+                    rootNode.detachChild(rintangan.getRintangan());
+                    spawn(new Shuriken(assetManager.loadModel("Models/shuriken2.j3o")));
+                    trex.getTrexControl().setEnabled(true);
+                    s.setScore(0);
+                    s.setIsRun(true);
+                    speed=7;
+                    alive=true;
+                }
+            }
+            if (name.equals("Duck")) {
+                duck = keyPressed;
             }
         }
     };
@@ -128,13 +150,14 @@ public class Main extends SimpleApplication
         if((rintangan.getRintangan()!=null)&&(trex.getTrexPlayer()!=null)){
             if(isHit(trex.getTrexControl().getPhysicsLocation(),rintangan.getRintanganControl().getPhysicsLocation())==true){
                 rintangan.getRintanganControl().setEnabled(false);
-                if(rintangan.equals(shuriken))
-                {
+                
+                if(rintangan instanceof Shuriken){
                     rootNode.getChild("Shuriken").removeControl(RotatingControl.class);
                 }
                 trex.getTrexControl().setEnabled(false);
                 s.setIsRun(false);
                 highScoreText.setText("High Score: " + s.getHighScore());
+                alive=false;
             }
         }
     }
@@ -145,7 +168,7 @@ public class Main extends SimpleApplication
         
     }
     
-    public boolean isHit(Vector3f v,Vector3f v2)
+     public boolean isHit(Vector3f v,Vector3f v2)
     {
         float x=v.getX();   float x2=v2.getX();     float xRes;
         float y=v.getY();   float y2=v2.getY();     float yRes;
@@ -174,7 +197,13 @@ public class Main extends SimpleApplication
         {
             zRes=z2-z;
         }
-        if((xRes<1)&&(yRes<1.5f)&&(zRes<1))
+        int temp;
+        if(duck==true){
+            temp=1;
+        }else{
+            temp=0;
+        }
+        if((xRes<1)&&(yRes<1.5f-temp)&&(zRes<1f))
         {
             return true;
         }
@@ -204,7 +233,7 @@ public class Main extends SimpleApplication
         }
     }
     
-    //memanggil rintangan dari posisi yang telah ditentukan dan menambah kecepatan rintangan.
+    //memanggil rintangan dari posisi yang telah ditentukan.
     public void spawn(Rintangan rin){
         rintangan=rin;
         rootNode.attachChild(rintangan.getRintangan());
