@@ -29,8 +29,8 @@ public abstract class Rintangan
     public Rintangan(Spatial rin)
     {
         Random r=new Random();
-        int rand=r.nextInt(2)+1;
-        rin.setLocalTranslation(0, rand, 57);
+        int rand=r.nextInt(3);
+        rin.setLocalTranslation(0, randomKetinggian(rand), 57);
         this.rintangan=rin;
         BoundingBox boundingBox =(BoundingBox) rintangan.getWorldBound();
         float radius=boundingBox.getXExtent();
@@ -42,7 +42,22 @@ public abstract class Rintangan
         rintangan.addControl(rintanganControl);
     }
 
-    
+    /**
+     * Method untuk mengubah nilai-nilai dari hasil random menjadi ketinggian
+     * @param tinggi , angka acak (1,2,3)
+     * @return ketinggian benda.
+     */
+        public float randomKetinggian(int tinggi){
+        if(tinggi==0){
+            return f;
+        }
+        else if(tinggi==1){
+            return 2.5f;
+        }
+        else{
+            return 1;
+        }
+    }
     
     /**
      * Method untuk mengubah control rintangan
